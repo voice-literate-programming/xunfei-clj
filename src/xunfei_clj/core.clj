@@ -1,5 +1,5 @@
 (ns xunfei-clj.core
-  (:import [com.iflytek.cloud.speech.SpeechRecognizer]))
+  (:import [com.iflytek.cloud.speech SpeechRecognizer SpeechConstant]))
 
 (defn foo
   "I don't do a whole lot."
