@@ -12,8 +12,6 @@
 
 (def app-init (SpeechUtility/createUtility appid))
 
-;; (.onSpeakPaused mSynListener) ;;=> nil
-;; (.onSpeakPausedaaaacc mSynListener "aaa") ;;No matching method found: onSpeakPausedaaaacc
 ;; (.onSpeakProgress (mSynListenerGen) 1 1 1) ;;=> nil
 (defn mSynListenerGen
   []
@@ -35,19 +33,6 @@
       _ (.setParameter mTts SpeechConstant/TTS_AUDIO_PATH "./tts_test.pcm")
       ]
   ;; 开始合成
-  (.startSpeaking mTts "语音合成测试程序" (mSynListenerGen)) ;;=> java.lang.NoClassDefFoundError: org/json/JSONException
-
-  ;;(.startSpeaking mTts "语音合成测试程序 "")
+  (.startSpeaking mTts "语音合成测试程序" (mSynListenerGen))
   )
 
-;; onCompleted(SpeechError error) {}
-;; onBufferProgress(int percent, int beginPos, int endPos, String info) {}
-;; onSpeakBegin() {}
-;; onSpeakPaused() {}
-;; onSpeakProgress(int percent, int beginPos, int endPos) {}
-;; onSpeakResumed() {}
-
-;; (new
-;;  (SynthesizerListener.)
-;;  "nil" "nil" "nil" "nil" "nil" "nil")
-;; 
