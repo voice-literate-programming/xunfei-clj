@@ -6,7 +6,9 @@
             SpeechSynthesizer
             SynthesizerListener
             SynthesizeToUriListener
-            SpeechError]
+            SpeechError
+            RecognizerListener
+            RecognizerResult]
            [org.json JSONArray JSONObject JSONTokener]
            ))
 
@@ -65,3 +67,30 @@
    text
    (fn [mTts text]
      (.synthesizeToUri mTts text url (synthesizeToUriListener)))))
+
+;; =======>>>> 下面是语音识别生成文本 ====>>>>>
+;; 路由监听器
+(defn mRecoListener
+  []
+  (proxy [RecognizerListener] []
+    (onResult [^RecognizerResult results ^Boolean isLast]
+      (println "识别语音结果:=>" (.getResultString results)) )
+    (onError [^SpeechError error] (.getPlainDescription error true) )
+    (onBeginOfSpeech [])
+    (onVolumeChanged [^Integer volume])
+    (onEndOfSpeech [])
+    (onEvent [^Integer eventType ^Integer arg1 ^Integer arg2 ^String msg])
+    )
+  )
+
+;; (read-text-to-voice)
+;; 语音识别生成文本打印出来
+(defn read-text-to-voice
+  []
+  (let [mIat (SpeechRecognizer/createRecognizer)
+        _ (.setParameter mIat SpeechConstant/DOMAIN "iat")
+        _ (.setParameter mIat SpeechConstant/LANGUAGE "zh_cn")
+        _ (.setParameter mIat SpeechConstant/ACCENT "mandarin")]
+    (.startListening mIat (mRecoListener))
+    )
+  )
