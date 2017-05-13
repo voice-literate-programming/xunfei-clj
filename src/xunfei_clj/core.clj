@@ -12,6 +12,7 @@
 
 (def app-init (SpeechUtility/createUtility appid))
 
+;; 设置合成监听器,对SynthesizerListener进行proxy,添加对象属性控制
 ;; (.onSpeakProgress (mSynListenerGen) 1 1 1) ;;=> nil
 (defn mSynListenerGen
   []
@@ -25,13 +26,16 @@
     )
   )
 
-(let [mTts (SpeechSynthesizer/createSynthesizer)
-      _ (.setParameter mTts SpeechConstant/VOICE_NAME "xiaoyan")
-      _ (.setParameter mTts SpeechConstant/SPEED "50")
-      _ (.setParameter mTts SpeechConstant/VOLUME "80")
-      _ (.setParameter mTts SpeechConstant/TTS_AUDIO_PATH "./tts_test.pcm")
-      ]
-  ;; Ubuntu: 开始合成, 测试文本,合成读音ok:-)
-  (.startSpeaking mTts "语音合成测试程序" (mSynListenerGen))
+;; (read-text-as-voice "输入文本,用讯飞语音合成器, 合成发音播放")
+(defn read-text-as-voice
+  [text]
+  (let [mTts (SpeechSynthesizer/createSynthesizer)
+        _ (.setParameter mTts SpeechConstant/VOICE_NAME "xiaoyan")
+        _ (.setParameter mTts SpeechConstant/SPEED "50")
+        _ (.setParameter mTts SpeechConstant/VOLUME "80")
+        _ (.setParameter mTts SpeechConstant/TTS_AUDIO_PATH "./tts_test.pcm")
+        ]
+    ;; Ubuntu: 开始合成, 测试文本,合成读音ok:-)
+    (.startSpeaking mTts text (mSynListenerGen))
+    )
   )
-
