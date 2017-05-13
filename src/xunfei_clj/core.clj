@@ -20,7 +20,6 @@
     (onBufferProgress [^Integer percent  ^Integer beginPos  ^Integer endPos ^String info])
     (onSpeakBegin [])
     (onSpeakPaused [])
-    ;; (onSpeakPausedaaaacc [x] x)
     (onSpeakProgress [^Integer percent ^Integer beginPos ^Integer endPos])
     (onSpeakResumed [])
     )
@@ -32,7 +31,7 @@
       _ (.setParameter mTts SpeechConstant/VOLUME "80")
       _ (.setParameter mTts SpeechConstant/TTS_AUDIO_PATH "./tts_test.pcm")
       ]
-  ;; 开始合成
+  ;; Ubuntu: 开始合成, 测试文本,合成读音ok:-)
   (.startSpeaking mTts "语音合成测试程序" (mSynListenerGen))
   )
 
