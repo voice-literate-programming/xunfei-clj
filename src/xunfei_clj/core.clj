@@ -83,9 +83,9 @@
     )
   )
 
-;; (read-text-to-voice)
+;; (record-voice-to-text)
 ;; 语音识别生成文本打印出来
-(defn read-text-to-voice
+(defn record-voice-to-text
   []
   (let [mIat (SpeechRecognizer/createRecognizer)
         _ (.setParameter mIat SpeechConstant/DOMAIN "iat")
