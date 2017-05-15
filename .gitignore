@@ -3,9 +3,12 @@
 /checkouts
 pom.xml
 pom.xml.asc
-*.jar
+#*.jar
 *.class
 /.lein-*
 /.nrepl-port
 .hgignore
 .hg/
+examples/hello-xunfei/target/
+examples/hello-xunfei/.lein-repl-history
+examples/hello-xunfei/.nrepl-port
