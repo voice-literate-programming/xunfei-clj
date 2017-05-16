@@ -94,3 +94,26 @@
     (.startListening mIat (mRecoListener))
     )
   )
+
+;; For Emacs API ;;;;;;;;;;;
+(defn r [text] (text-to-player text))
+
+;; (read-do (r "中线是什么") (r "什么数学算法模型"))
+;; 读=> "00000下面是:第1段 中线是什么11111本段结束 00000下面是:第2段 什么数学算法模型11111本段结束"
+(defmacro read-do
+  [& lst]
+  (r
+   (clojure.string/join
+    " "
+    (flatten
+     (map-indexed
+      (fn [inx# li#]
+        (list
+         (str "00000下面是:第" (+ inx# 1) "段")
+         (str (last li#) "本段结束11111" ))) lst)))))
+
+;; 读任何的输入: (r1 接下来要做的是什么 Todos 设置时间选择范围) 
+(defmacro r1
+  [& lst]
+  (r (str lst)))
+
