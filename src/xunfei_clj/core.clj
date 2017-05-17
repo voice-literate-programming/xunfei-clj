@@ -12,7 +12,7 @@
            [org.json JSONArray JSONObject JSONTokener]
            ))
 
-(def appid (str SpeechConstant/APPID "=xxxxxxx"))
+(def appid (str SpeechConstant/APPID "=59145fb0"))
 
 (def app-init (SpeechUtility/createUtility appid))
 
