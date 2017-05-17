@@ -70,16 +70,18 @@
      (.synthesizeToUri mTts text url (synthesizeToUriListener)))))
 
 ;; =======>>>> 下面是语音识别生成文本 ====>>>>>
-(def regcog-res (atom (sorted-map)))
+;; 存放语音识别的结果列表,异步消费remove掉,这里只是暂存的中间过程
+(def regcog-res (atom (list)))
+;; 例子=> ({"sn" 2, "ls" true, "bg" 0, "ed" 0, "ws" [{"bg" 0, "cw" [{"sc" 0.0, "w" "。"}]}]} {"sn" 1, "ls" false, "bg" 0, "ed" 0, "ws" [{"bg" 0, "cw" [{"sc" 0.0, "w" "哈"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "哈哈"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "，"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "这里"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "新人"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "吃"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "蒂"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "夫"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "乔布斯"}]}]})
+
 ;; 路由监听器
 (defn mRecoListener
   []
   (proxy [RecognizerListener] []
     (onResult [^RecognizerResult results ^Boolean isLast]
-      (let [res (.getResultString results)
-            res-hash (cjson/parse-string res)]
+      (let [res (-> results .getResultString cjson/parse-string)]
         (println "识别语音结果:=>" res)
-        (reset! regcog-res res-hash)
+        (swap! regcog-res conj res)
         )
       )
     (onError [^SpeechError error] (.getPlainDescription error true) )
