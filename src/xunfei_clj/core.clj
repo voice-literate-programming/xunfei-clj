@@ -1,4 +1,5 @@
 (ns xunfei-clj.core
+  (:require [cheshire.core :as cjson])
   (:import [com.iflytek.cloud.speech
             SpeechRecognizer
             SpeechConstant
@@ -69,12 +70,18 @@
      (.synthesizeToUri mTts text url (synthesizeToUriListener)))))
 
 ;; =======>>>> 下面是语音识别生成文本 ====>>>>>
+(def regcog-res (atom (sorted-map)))
 ;; 路由监听器
 (defn mRecoListener
   []
   (proxy [RecognizerListener] []
     (onResult [^RecognizerResult results ^Boolean isLast]
-      (println "识别语音结果:=>" (.getResultString results)) )
+      (let [res (.getResultString results)
+            res-hash (cjson/parse-string res)]
+        (println "识别语音结果:=>" res)
+        (reset! regcog-res res-hash)
+        )
+      )
     (onError [^SpeechError error] (.getPlainDescription error true) )
     (onBeginOfSpeech [])
     (onVolumeChanged [^Integer volume])
