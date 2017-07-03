@@ -18,8 +18,8 @@
 (def app-init (SpeechUtility/createUtility appid))
 
 ;; 设置合成监听器,对SynthesizerListener进行proxy,添加对象属性控制
-;; (.onSpeakProgress (mSynListenerGen) 1 1 1) ;;=> nil
-(defn mSynListenerGen
+;; (.onSpeakProgress (m-syn-listener-gen) 1 1 1) ;;=> nil
+(defn m-syn-listener-gen
   []
   (proxy [SynthesizerListener] []
     (onCompleted [_])
@@ -50,10 +50,10 @@
   [text]
   (read-text-to-voice
    text
-   (fn [m-tts text] (.startSpeaking m-tts text (mSynListenerGen)))))
+   (fn [m-tts text] (.startSpeaking m-tts text (m-syn-listener-gen)))))
 
 ;; 将text合成的语音保存到文件的合成器
-(defn synthesizeToUriListener
+(defn synthesize-to-uri-listener
   []
   (proxy [SynthesizeToUriListener] []
     (onBufferProgress [^Integer progress])
@@ -68,7 +68,7 @@
   (read-text-to-voice
    text
    (fn [m-tts text]
-     (.synthesizeToUri m-tts text url (synthesizeToUriListener)))))
+     (.synthesizeToUri m-tts text url (synthesize-to-uri-listener)))))
 
 ;; =======>>>> 下面是语音识别生成文本 ====>>>>>
 ;; 存放语音识别的结果列表,异步消费remove掉,这里只是暂存的中间过程
@@ -76,7 +76,7 @@
 ;; 例子=> ({"sn" 2, "ls" true, "bg" 0, "ed" 0, "ws" [{"bg" 0, "cw" [{"sc" 0.0, "w" "。"}]}]} {"sn" 1, "ls" false, "bg" 0, "ed" 0, "ws" [{"bg" 0, "cw" [{"sc" 0.0, "w" "哈"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "哈哈"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "，"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "这里"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "新人"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "吃"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "蒂"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "夫"}]} {"bg" 0, "cw" [{"sc" 0.0, "w" "乔布斯"}]}]})
 
 ;; 路由监听器
-(defn mRecoListener
+(defn m-reco-listener
   []
   (proxy [RecognizerListener] []
     (onResult [^RecognizerResult results ^Boolean isLast]
@@ -102,7 +102,7 @@
           (.setParameter SpeechConstant/DOMAIN "iat")
           (.setParameter SpeechConstant/LANGUAGE "zh_cn")
           (.setParameter SpeechConstant/ACCENT "mandarin"))]
-    (.startListening m-iat (mRecoListener))
+    (.startListening m-iat (m-reco-listener))
     )
   )
 
