@@ -1,6 +1,7 @@
 # xunfei-clj
 
-A Clojure library designed to ... well, that part is up to you.
+Clojure封装讯飞语音SDK,提供给Emacs语音调用接口, 通过[Cider](https://github.com/clojure-emacs/cider
+)和Emacs通讯
 
 ## Usage
 
