@@ -5,7 +5,13 @@ Clojure封装讯飞语音SDK,提供给Emacs语音调用接口, 通过[Cider](htt
 
 ## Usage
 
-FIXME
+```bash
+
+$ lein repl 
+
+xunfei-clj.core>  (r "什么语音文学驱动编程?")
+
+```
 
 ## License
 
