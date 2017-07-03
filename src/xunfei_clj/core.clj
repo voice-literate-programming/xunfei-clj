@@ -34,13 +34,14 @@
 ;; (read-text-as-voice "输入文本,用讯飞语音合成器, 合成发音播放" (fn [mTts text] ...播放或者是保存到音频文件...) )
 (defn read-text-to-voice
   [text output-fn]
-  (let [mTts (SpeechSynthesizer/createSynthesizer)
-        _ (.setParameter mTts SpeechConstant/VOICE_NAME "xiaoyan")
-        _ (.setParameter mTts SpeechConstant/SPEED "50")
-        _ (.setParameter mTts SpeechConstant/VOLUME "80")
-        _ (.setParameter mTts SpeechConstant/TTS_AUDIO_PATH "./tts_test.pcm")]
+  (let [m-tts
+        (doto (SpeechSynthesizer/createSynthesizer)
+          (.setParameter SpeechConstant/VOICE_NAME "xiaoyan")
+          (.setParameter SpeechConstant/SPEED "50")
+          (.setParameter SpeechConstant/VOLUME "80")
+          (.setParameter SpeechConstant/TTS_AUDIO_PATH "./tts_test.pcm"))]
     ;; Ubuntu: 开始合成, 测试文本,合成读音ok:-)
-    (output-fn mTts text)
+    (output-fn m-tts text)
     )
   )
 
@@ -49,7 +50,7 @@
   [text]
   (read-text-to-voice
    text
-   (fn [mTts text] (.startSpeaking mTts text (mSynListenerGen)))))
+   (fn [m-tts text] (.startSpeaking m-tts text (mSynListenerGen)))))
 
 ;; 将text合成的语音保存到文件的合成器
 (defn synthesizeToUriListener
@@ -66,8 +67,8 @@
   [text url]
   (read-text-to-voice
    text
-   (fn [mTts text]
-     (.synthesizeToUri mTts text url (synthesizeToUriListener)))))
+   (fn [m-tts text]
+     (.synthesizeToUri m-tts text url (synthesizeToUriListener)))))
 
 ;; =======>>>> 下面是语音识别生成文本 ====>>>>>
 ;; 存放语音识别的结果列表,异步消费remove掉,这里只是暂存的中间过程
@@ -96,11 +97,12 @@
 ;; 语音识别生成文本打印出来
 (defn record-voice-to-text
   []
-  (let [mIat (SpeechRecognizer/createRecognizer)
-        _ (.setParameter mIat SpeechConstant/DOMAIN "iat")
-        _ (.setParameter mIat SpeechConstant/LANGUAGE "zh_cn")
-        _ (.setParameter mIat SpeechConstant/ACCENT "mandarin")]
-    (.startListening mIat (mRecoListener))
+  (let [m-iat
+        (doto (SpeechRecognizer/createRecognizer)
+          (.setParameter SpeechConstant/DOMAIN "iat")
+          (.setParameter SpeechConstant/LANGUAGE "zh_cn")
+          (.setParameter SpeechConstant/ACCENT "mandarin"))]
+    (.startListening m-iat (mRecoListener))
     )
   )
 
