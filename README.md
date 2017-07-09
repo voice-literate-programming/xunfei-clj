@@ -1,7 +1,8 @@
 # xunfei-clj
 
-Clojure封装讯飞语音SDK,提供给Emacs语音调用接口, 通过[Cider](https://github.com/clojure-emacs/cider
-)和Emacs通讯
+Clojure封装讯飞语音SDK,提供给Emacs语音调用接口, 通过[Cider](https://github.com/clojure-emacs/cider)和Emacs通讯
+
+*目前只支持Linux和Windows系统,因为讯飞官方SDK暂未支持Mac*
 
 ## Usage
 
