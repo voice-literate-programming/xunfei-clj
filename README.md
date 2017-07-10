@@ -4,7 +4,26 @@ Clojure封装讯飞语音SDK,提供给Emacs语音调用接口, 通过[Cider](htt
 
 *目前只支持Linux和Windows系统,因为讯飞官方SDK暂未支持Mac*
 
-## Usage
+## Usage: [查看使用示例hello-xunfei](./examples/hello-xunfei)
+```clojure
+;; 1. add to project.clj.
+[xunfei-clj "0.1.0-SNAPSHOT"]
+
+;; 2. add Msc.jar to project's lib path, then add `:resource-paths` option.
+:resource-paths ["lib/Msc.jar"]
+
+;; 3. copy libmsc64.so(windows: msc64.dll) & libmsc32.so(windows: msc32.dll) to your project root path.
+
+;; 4. core.clj:
+(ns hello-xunfei.core
+  (:require [xunfei-clj.core :as xunfei]))
+
+(defn xunfei-say-hi
+  [text]
+  (xunfei/text-to-player text))
+```
+
+## Develop
 
 ```bash
 $ lein repl 
