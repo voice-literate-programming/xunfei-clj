@@ -1,6 +1,6 @@
 # xunfei-clj
 
-Clojure封装讯飞语音SDK, 可提供给Emacs/Vim编辑器使用,或者命令行, 实现语音提醒/语音转为命令等
+Clojure封装讯飞语音SDK, 可提供给Emacs/Vim编辑器使用,或者命令行, 实现语音朗读提醒/语音识别/语音转为命令等
 
 *目前只支持Linux和Windows系统,因为讯飞官方SDK暂未支持Mac*
 
