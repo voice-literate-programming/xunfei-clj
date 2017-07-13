@@ -37,7 +37,8 @@ Clojure封装讯飞语音SDK, 可提供给Emacs/Vim编辑器使用,或者命令�
 ```bash
 $ lein repl 
 
-xunfei-clj.core> 
+;; 讯飞初始化
+xunfei-clj.core> (xunfei/app-init "your-xunfei-appid")
 ```
 
 ```clojure
