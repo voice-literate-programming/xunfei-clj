@@ -5,7 +5,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [compojure "1.5.1"]
                  [ring/ring-defaults "0.2.1"]
-                 [xunfei-clj "0.1.0-SNAPSHOT"]]
+                 [xunfei-clj "0.1.3-SNAPSHOT"]]
   :resource-paths ["lib/Msc.jar"]
   :plugins [[lein-ring "0.9.7"]]
   :ring {:handler hello-xunfei.handler/app}

@@ -7,7 +7,7 @@ Clojure封装讯飞语音SDK, 可提供给Emacs/Vim编辑器使用,或者命令�
 ## Usage: [查看使用示例hello-xunfei](./examples/hello-xunfei)
 ```clojure
 ;; 1. add to project.clj.
-[xunfei-clj "0.1.0-SNAPSHOT"]
+[xunfei-clj "0.1.3-SNAPSHOT"]
 
 ;; 2. add Msc.jar to project's lib path, then add `:resource-paths` option.
 :resource-paths ["lib/Msc.jar"]
@@ -18,9 +18,18 @@ Clojure封装讯飞语音SDK, 可提供给Emacs/Vim编辑器使用,或者命令�
 (ns hello-xunfei.core
   (:require [xunfei-clj.core :as xunfei]))
 
+;; 讯飞初始化
+(xunfei/app-init "your-xunfei-appid") ;; 可以自行到讯飞开放平台注册一个appid
+
+;; 语音朗读
 (defn xunfei-say-hi
   [text]
   (xunfei/text-to-player text))
+
+;; 语音识别
+(def regcog-res (atom (list)))
+(xunfei/m-reco-listener #(swap! regcog-res conj %))
+
 ```
 
 ## Develop
