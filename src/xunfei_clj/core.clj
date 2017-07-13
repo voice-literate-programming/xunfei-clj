@@ -81,7 +81,7 @@
 
 ;; (record-voice-to-text)
 (defn record-voice-to-text
-  []
+  [m-reco-listener]
   (let [m-iat
         (doto (SpeechRecognizer/createRecognizer)
           (.setParameter SpeechConstant/DOMAIN "iat")
